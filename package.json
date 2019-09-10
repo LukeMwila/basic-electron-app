@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
     "postinstall": "install-app-deps",
-    "dist": "electron-builder --publish onTagOrDraft"
+    "dist": "electron-builder build --publish onTagOrDraft"
   },
   "build": {
     "appId": "com.lukondemwila.electrontest",
@@ -20,6 +20,9 @@
       "index.html",
       "package.json"
     ],
+    "directories": {
+      "output": "release"
+    },
     "dmg": {
       "contents": [
         {
@@ -45,19 +48,15 @@
     }
   },
   "keywords": [],
-  "directories": {
-    "output": "release"
-  },
   "author": {
     "name": "Lukonde Mwila",
     "email": "lukonde.mwila@entelect.co.za",
     "url": "https://github.com/LukeMwila"
   },
   "license": "ISC",
-  "dependencies": {
-    "electron": "^6.0.4"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "electron-builder": "^21.2.0"
+    "electron-builder": "^21.2.0",
+    "electron": "^6.0.4"
   }
 }
