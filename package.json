@@ -1,13 +1,57 @@
 {
   "name": "basic-app",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "postinstall": "install-app-deps",
+    "dist": "npm run build && build --publish onTagOrDraft"
+  },
+  "build": {
+    "appId": "com.lukondemwila.electrontest",
+    "category": "public.app-category.education",
+    "files": [
+      "dist/",
+      "node_modules/",
+      "static/",
+      "main.js",
+      "index.html",
+      "package.json"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": "squirrel"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    }
   },
   "keywords": [],
-  "author": "Luke Mwila",
+  "directories": {
+    "output": "release"
+  },
+  "author": {
+    "name": "Lukonde Mwila",
+    "email": "lukonde.mwila@entelect.co.za",
+    "url": "https://github.com/LukeMwila"
+  },
   "license": "ISC",
   "dependencies": {
     "electron": "^6.0.4"
