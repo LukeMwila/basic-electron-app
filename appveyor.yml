@@ -5,7 +5,7 @@ environment:
   GH_TOKEN:
     secure: 3p18hGA3Z+Sa5FK/LKdQPWqe6LZ0GGnKUP0eJoHQ2RBmlxdGHW6nGbW8tl99FKaI
   matrix:
-    - nodejs_version: 6
+    - nodejs_version: 8.x
 install:
   - ps: Install-Product node $env:nodejs_version
   - set CI=true
