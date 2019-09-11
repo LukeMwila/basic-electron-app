@@ -19,6 +19,7 @@
       "index.html",
       "package.json"
     ],
+    "description": "App description",
     "directories": {
       "output": "release"
     },
@@ -37,7 +38,7 @@
       ]
     },
     "win": {
-      "target": "squirrel"
+      "target": "nsis"
     },
     "linux": {
       "target": [
