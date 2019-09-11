@@ -39,8 +39,7 @@
     "win": {
       "target": "nsis",
       "publish": [
-        "github",
-        "bintray"
+        "github"
       ]
     },
     "linux": {
