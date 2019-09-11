@@ -19,7 +19,6 @@
       "index.html",
       "package.json"
     ],
-    "description": "App description",
     "directories": {
       "output": "release"
     },
