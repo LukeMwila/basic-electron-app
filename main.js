@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, autoUpdater } = require("electron");
 const path = require("path");
 const url = require("url");
 
@@ -39,6 +39,31 @@ function createWindow() {
 
 // Run create window function
 app.on("ready", createWindow);
+
+autoUpdater.on("checking-for-update", () => {
+  sendStatusToWindow("Checking for update...");
+});
+autoUpdater.on("update-available", () => {
+  sendStatusToWindow("Update available.");
+});
+autoUpdater.on("update-not-available", () => {
+  sendStatusToWindow("Update not available.");
+});
+autoUpdater.on("error", err => {
+  sendStatusToWindow(`Error in auto-updater: ${err.toString()}`);
+});
+autoUpdater.on("download-progress", progressObj => {
+  sendStatusToWindow(
+    `Download speed: ${progressObj.bytesperSecond} - Downloaded ${progressObj.percent}% (${progressObj.transferred})`
+  );
+});
+autoUpdater.on("update-downloaded", info => {
+  sendStatusToWindow("Update downloaded; will install now");
+  // Wait 5 seconds, then quit and install
+  // In your application, you don't need to wait 500ms
+  // You could call autoUpdater.quitAndInstall(); immediate;y
+  autoUpdater.quitAndInstall();
+});
 
 // Quit when all windows are closed
 app.on("window-all-closed", () => {
