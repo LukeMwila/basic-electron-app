@@ -1,4 +1,5 @@
-const { app, BrowserWindow, autoUpdater } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
+const { autoUpdater } = require("electron-updater");
 const path = require("path");
 const url = require("url");
 
@@ -14,7 +15,6 @@ function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 600,
-    icon: __dirname + "/img/gear-icon.png",
     webPreferences: {
       nodeIntegration: true
     }
@@ -38,31 +38,9 @@ function createWindow() {
 }
 
 // Run create window function
-app.on("ready", createWindow);
-
-autoUpdater.on("checking-for-update", () => {
-  sendStatusToWindow("Checking for update...");
-});
-autoUpdater.on("update-available", () => {
-  sendStatusToWindow("Update available.");
-});
-autoUpdater.on("update-not-available", () => {
-  sendStatusToWindow("Update not available.");
-});
-autoUpdater.on("error", err => {
-  sendStatusToWindow(`Error in auto-updater: ${err.toString()}`);
-});
-autoUpdater.on("download-progress", progressObj => {
-  sendStatusToWindow(
-    `Download speed: ${progressObj.bytesperSecond} - Downloaded ${progressObj.percent}% (${progressObj.transferred})`
-  );
-});
-autoUpdater.on("update-downloaded", info => {
-  sendStatusToWindow("Update downloaded; will install now");
-  // Wait 5 seconds, then quit and install
-  // In your application, you don't need to wait 500ms
-  // You could call autoUpdater.quitAndInstall(); immediate;y
-  autoUpdater.quitAndInstall();
+app.on("ready", () => {
+  createWindow();
+  autoUpdater.checkForUpdatesAndNotify();
 });
 
 // Quit when all windows are closed
@@ -72,4 +50,20 @@ app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
+});
+
+ipcMain.on("app_version", event => {
+  event.sender.send("app_version", { version: app.getVersion() });
+});
+
+autoUpdater.on("update-available", () => {
+  mainWindow.webContents.send("update_available");
+});
+
+autoUpdater.on("update-downloaded", () => {
+  mainWindow.webContents.send("update_downloaded");
+});
+
+ipcMain.on("restart_app", () => {
+  autoUpdater.quitAndInstall();
 });
