@@ -45,9 +45,6 @@
       <button id="close-button" onClick="closeNotification()">
         Close
       </button>
-      <!-- <button id="restart-button" onClick="restartApp()" class="hidden">
-        Restart
-      </button> -->
     </div>
   </body>
   <script>
@@ -55,7 +52,6 @@
     const version = document.getElementById("version");
     const notification = document.getElementById("notification");
     const message = document.getElementById("message");
-    // const restartButton = document.getElementById("restart-button");
 
     ipcRenderer.send("app_version");
     ipcRenderer.on("app_version", (event, arg) => {
@@ -71,7 +67,6 @@
       ipcRenderer.removeAllListeners("update_downloaded");
       message.innerText =
         "Update Downloaded. Update will be installed and application will be restarted now.";
-      // restartButton.classList.remove("hidden");
       notification.classList.remove("hidden");
       restartApp();
     });

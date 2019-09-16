@@ -60,7 +60,9 @@ function sendWindowMessage(targetWindow, message, payload) {
 // Run create window function
 app.on("ready", async () => {
   createWindow();
-  autoUpdater.checkForUpdatesAndNotify();
+  setInterval(() => {
+    autoUpdater.checkForUpdatesAndNotify();
+  }, 60000); // 900000 every 15 minutes
 
   ipcMain.on("message-from-worker", (event, arg) => {
     console.log("[Step 1]: Here sending message from worker");
