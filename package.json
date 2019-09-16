@@ -57,7 +57,8 @@
   },
   "license": "ISC",
   "dependencies": {
-    "electron-updater": "^4.1.2"
+    "electron-updater": "^4.1.2",
+    "promise-worker": "^2.0.1"
   },
   "devDependencies": {
     "electron-builder": "^21.2.0",

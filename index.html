@@ -45,9 +45,9 @@
       <button id="close-button" onClick="closeNotification()">
         Close
       </button>
-      <button id="restart-button" onClick="restartApp()" class="hidden">
+      <!-- <button id="restart-button" onClick="restartApp()" class="hidden">
         Restart
-      </button>
+      </button> -->
     </div>
   </body>
   <script>
@@ -70,9 +70,10 @@
     ipcRenderer.on("update_downloaded", () => {
       ipcRenderer.removeAllListeners("update_downloaded");
       message.innerText =
-        "Update Downloaded. It will be installed on restart. Restart now?";
+        "Update Downloaded. Update will be installed and application will be restarted now.";
       restartButton.classList.remove("hidden");
       notification.classList.remove("hidden");
+      restartApp();
     });
     function closeNotification() {
       notification.classList.add("hidden");
